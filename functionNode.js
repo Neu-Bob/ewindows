@@ -2,6 +2,7 @@ const events = msg.payload.sunevents;
 const timeZoneGMT = 'GMT';
 const timeZoneEDT = 'America/New_York';
 
+//takes the sun events from the "sun-events" node and parses them to their own messages
 events.forEach(event => {
     let eventName = event.event_name;
     let eventDateTime = new Date(event.datetime);
