@@ -29,11 +29,11 @@ let currentPhase = sunRemaining > rampUp ? 'rampUp' : 'rampDown';
 msg.phase = currentPhase;  //outputs to msg the phase
 
 if (currentPhase === 'rampUp') {
-    brightness = Math.floor((minutesBetween - sunRemaining) / (delayInMinutes * 100));
+    //calculate birhgness presentage 
 }
 
 if (currentPhase === 'rampDown') {
-    brightness = 100 - Math.floor(((rampDown - sunRemaining) / (delayInMinutes)) * 100); // calculate brightness percentage and round to lower whole number
+    // calculate brightness percentage and round to lower whole number
 }
 
 msg.payload = {
@@ -43,6 +43,8 @@ msg.payload = {
         brightness_pct: brightness,
     }
 };
+
+
 msg.delay = delay;
 
 return msg;
