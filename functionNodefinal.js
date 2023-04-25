@@ -8,8 +8,11 @@
 //create a variable and output a msg.dayLightMinutes for dayLightMinutes calculated by sunrise and sunset times
 //create a variable and out for daylightMinutesRemaining
 
-//Ramp Up & Ramp Down
+//delay between brightness steps
+// delay = (dayLightMinutes / 2) / 100
 
+
+//Ramp Up & Ramp Down
 //create a variable called brightness_pct
 
 //ramp up brightness percentage 
