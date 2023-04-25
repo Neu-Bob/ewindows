@@ -8,8 +8,8 @@
 //create a variable and out for daylightMinutesRemaining
 
 //delay between brightness steps
-// delay = (dayLightMinutes / 2) / 100
-
+// delayInMinutes = (dayLightMinutes / 2) / 100  ((this will output minutes))
+// let delayInMilliseconds = delayInMinutes * 60000
 
 //Ramp Up & Ramp Down
 //create a variable called brightness_pct
