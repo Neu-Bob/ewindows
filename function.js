@@ -1,12 +1,14 @@
 const events = msg.payload.sunevents;
+const timeZoneGMT = 'GMT';
 const timeZoneEDT = 'America/New_York';
 
 events.forEach(event => {
     let eventName = event.event_name;
     let eventDateTime = new Date(event.datetime);
     let localTimeEDT = new Intl.DateTimeFormat('en-US', { timeZone: timeZoneEDT, hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3, hourCycle: 'h23' }).format(eventDateTime);
-    msg[eventName] = { time: localTimeEDT };
-}); // assign msgs to each sun event with several variations
+    let localTimeGMT = new Intl.DateTimeFormat('en-US', { timeZone: timeZoneGMT }).format(eventDateTime);
+    msg[eventName] = { time: localTimeEDT, datetimeEDT: eventDateTime, datetimeGMT: event.datetime };
+});  // assign msgs to each sun event with several variations
 
 let now = new Date();
 let nowTimeEDT = new Date(now.toLocaleString('en-US', { timeZone: timeZoneEDT, hour24: false }));
@@ -23,19 +25,19 @@ msg.time = nowTimeEDT.toLocaleString('en-US', { timeZone: timeZoneEDT, hour: '2-
 let delayInMinutes = (minutesBetween / 2) / 100;
 let delay = ((minutesBetween / 2) / 100) * 1000; // calculate delay to next message
 let sunRemaining = Math.round((sunsetTime - new Date(now.toLocaleDateString() + ' ' + msg.time)) / (60 * 1000)); // calculates remaining time in minutes
-let brightness = 0;
+let brightness = 0
 //what phase are we in? rampup or rampdown?
 let currentPhase = sunRemaining > rampUp ? 'rampUp' : 'rampDown';
 msg.phase = currentPhase;  //outputs to msg the phase
 
 if (currentPhase === 'rampUp') {
-    //calculate birhgness presentage 
+    brightness = Math.floor((minutesBetween - sunRemaining) / (delayInMinutes * 100));
 }
 
 if (currentPhase === 'rampDown') {
-    // calculate brightness percentage and round to lower whole number
+    brightness = 100 - Math.floor(((rampDown - sunRemaining) / (delayInMinutes)) * 100); // calculate brightness percentage and round to lower whole number
 }
-
+msg.b
 msg.payload = {
     domain: "light",
     service: "turn_on",
@@ -45,6 +47,6 @@ msg.payload = {
 };
 
 
-msg.delay = delay;
+msg.delay = delay
 
 return msg;
