@@ -23,24 +23,24 @@ let rampDown = minutesBetween / 2;
 msg.minutesBetween = minutesBetween;
 msg.time = nowTimeEDT.toLocaleString('en-US', { timeZone: timeZoneEDT, hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3, hourCycle: 'h23' });
 let delayInMinutes = (minutesBetween / 2) / 100;
-let delay = ((minutesBetween / 2) / 100) * 1000; // calculate delay to next message
+let delay = delayInMinutes * 60000 ; // calculate delay to next message
 let sunRemaining = Math.round((sunsetTime - new Date(now.toLocaleDateString() + ' ' + msg.time)) / (60 * 1000)); // calculates remaining time in minutes
-let brightness = 100
+let brightness = 0
 //what phase are we in? rampup or rampdown?
 let currentPhase = sunRemaining > rampUp ? 'rampUp' : 'rampDown';
 
-msg.phase = currentPhase;  //outputs to msg the phase
-msg.brightness = brightness;
-msg.sunRemaining = sunRemaining;
-msg.delayInMinutes = delayInMinutes;
-
 if (currentPhase === 'rampUp') {
-//    brightness = Math.floor((minutesBetween - sunRemaining) / (delayInMinutes * 100));
+brightness = Math.floor(100*(minutesBetween-sunRemaining)/(delayInMinutes*100));
 }
 
 if (currentPhase === 'rampDown') {
 //    brightness = 100 - Math.floor(((rampDown - sunRemaining) / (delayInMinutes)) * 100); // calculate brightness percentage and round to lower whole number
 }
+
+msg.phase = currentPhase;  //outputs to msg the phase
+msg.brightness = brightness;
+msg.sunRemaining = sunRemaining;
+msg.delayInMinutes = delayInMinutes;
 
 msg.payload = {
     domain: "light",
