@@ -34,7 +34,7 @@ brightness = Math.floor(100*(minutesBetween-sunRemaining)/(delayInMinutes*100));
 }
 
 if (currentPhase === 'rampDown') {
-//    brightness = 100 - Math.floor(((rampDown - sunRemaining) / (delayInMinutes)) * 100); // calculate brightness percentage and round to lower whole number
+brightness = Math.floor(minutesBetween-sunRemaining)/(delayInMinutes*100)-1;
 }
 
 msg.phase = currentPhase;  //outputs to msg the phase
@@ -42,6 +42,7 @@ msg.brightness = brightness;
 msg.sunRemaining = sunRemaining;
 msg.delayInMinutes = delayInMinutes;
 
+//sets the brightness of lights configured
 msg.payload = {
     domain: "light",
     service: "turn_on",
