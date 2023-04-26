@@ -34,7 +34,7 @@ brightness = Math.floor(100*(minutesBetween-sunRemaining)/(delayInMinutes*100));
 }
 
 if (currentPhase === 'rampDown') {
-brightness = Math.floor(minutesBetween-sunRemaining)/(delayInMinutes*100)-1;
+brightness = Math.floor(100*(minutesBetween-sunRemaining)/(delayInMinutes*100))-1;
 }
 
 msg.phase = currentPhase;  //outputs to msg the phase
