@@ -28,7 +28,11 @@ let sunRemaining = Math.round((sunsetTime - new Date(now.toLocaleDateString() + 
 let brightness = 100
 //what phase are we in? rampup or rampdown?
 let currentPhase = sunRemaining > rampUp ? 'rampUp' : 'rampDown';
+
 msg.phase = currentPhase;  //outputs to msg the phase
+msg.brightness = brightness;
+msg.sunRemaining = sunRemaining;
+msg.delayInMinutes = delayInMinutes;
 
 if (currentPhase === 'rampUp') {
 //    brightness = Math.floor((minutesBetween - sunRemaining) / (delayInMinutes * 100));
