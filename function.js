@@ -23,18 +23,18 @@ let rampDown = minutesBetween / 2;
 msg.minutesBetween = minutesBetween;
 msg.time = nowTimeEDT.toLocaleString('en-US', { timeZone: timeZoneEDT, hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3, hourCycle: 'h23' });
 let delayInMinutes = (minutesBetween / 2) / 100;
-let delay = delayInMinutes * 60000 ; // calculate delay to next message
+let delay = delayInMinutes * 60000; // calculate delay to next message
 let sunRemaining = Math.round((sunsetTime - new Date(now.toLocaleDateString() + ' ' + msg.time)) / (60 * 1000)); // calculates remaining time in minutes
 let brightness = 0
 //what phase are we in? rampup or rampdown?
 let currentPhase = sunRemaining > rampUp ? 'rampUp' : 'rampDown';
 
 if (currentPhase === 'rampUp') {
-brightness = Math.floor(100*(minutesBetween-sunRemaining)/(delayInMinutes*100));
+    brightness = Math.floor(100 * (minutesBetween - sunRemaining) / (delayInMinutes * 100));
 }
 
 if (currentPhase === 'rampDown') {
-brightness = Math.floor(100*(minutesBetween-sunRemaining)/(delayInMinutes*100))-1;
+    brightness = Math.round(((sunRemaining / (minutesBetween/2))*100));
 }
 
 msg.phase = currentPhase;  //outputs to msg the phase
